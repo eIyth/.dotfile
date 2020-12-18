@@ -35,10 +35,10 @@ run_once(
     "if xrandr | grep DP-1-0; then xrandr --auto --output DP-1-0 --mode 1920x1080 --right-of eDP1; fi")
 
 -- Compositor
-run_once("picom --experimental-backend")
+run_once("picom --experimental-backends")
 
--- Polkit
-run_once("/usr/lib/polkit-kde-authentication-agent-1 &")
+-- Polit 
+run_once("/usr/lib/polkit-kde-authentication-agent-1")
 
 return autostart
 

@@ -38,7 +38,7 @@ local mpd_title = wibox.widget {
 }
 local mpd_artist = wibox.widget {
     markup = "<span foreground='" .. beautiful.xcolor4 ..
-        "'><b>Elyth</b></span>",
+        "'><b>Gokul Swami</b></span>",
     widget = wibox.widget.textbox
 }
 

@@ -106,9 +106,9 @@ globalkeys = gears.table.join( -- Focus client by direction (arrow keys)
         awful.spawn.with_shell("~/.bin/shoot sel")
     end), -- Brightness
     awful.key({}, "XF86MonBrightnessUp",
-              function() awful.spawn("brightnessctl -c backlight set +1%") end),
+              function() awful.spawn("brightnessctl set +5%") end),
                  awful.key({}, "XF86MonBrightnessDown",
-                           function() awful.spawn("brightnessctl -c backlight set 1%-") end), -- ColorPicker
+                           function() awful.spawn("brightnessctl set 5%-") end), -- ColorPicker
                  awful.key({modkey}, "p",
                            function() awful.spawn("farge --notify") end),
 

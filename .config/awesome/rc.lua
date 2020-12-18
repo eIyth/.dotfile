@@ -57,7 +57,7 @@ editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 browser = "MOZ_X11_EGL=1 firefox"
 filemanager = "thunar"
-discord = "lightcord"
+discord = "discord"
 music = terminal .. " --class music -e ncspot"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -182,10 +182,8 @@ awful.rules.rules = {
     },
 
     -- Add titlebars to normal clients and dialogs (UNCOMMENT FOR DOUBLE BORDERS)
+    {rule_any = {type = {"dialog"}}, properties = {titlebars_enabled = false}},
     {
-        rule_any = {type = {"normal", "dialog"}},
-        properties = {titlebars_enabled = true}
-    }, {
         rule_any = {class = {"Steam"}},
         properties = {titlebars_enabled = false, ontop = true}
     }, -- Set Firefox to always map on the tag named "2" on screen 1.
