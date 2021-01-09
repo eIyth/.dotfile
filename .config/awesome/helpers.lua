@@ -11,6 +11,19 @@ local naughty = require("naughty")
 
 local helpers = {}
 
+-- Adds a maximized mask to a screen
+function helpers.screen_mask(s, bg)
+    local mask = wibox({
+        visible = false,
+        ontop = true,
+        type = "splash",
+        screen = s
+    })
+    awful.placement.maximize(mask)
+    mask.bg = bg
+    return mask
+end
+
 -- Resize gaps on the fly
 
 helpers.resize_gaps = function(amt)
@@ -24,6 +37,14 @@ end
 helpers.rrect = function(radius)
     return function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, radius)
+    end
+end
+
+-- Create parallelogram
+
+helpers.prgram = function(height, base)
+    return function(cr, width)
+        gears.shape.parallelogram(cr, width, height, base)
     end
 end
 

@@ -7,7 +7,7 @@ local helpers = require('helpers')
 
 local popupLib = {}
 
-popupLib.create = function(x, y, height, width, widget)
+popupLib.create = function(x, y, height, width, widget, radius, tl, tr, bl, br)
     local widgetContainer = wibox.widget {
         {widget, margins = dpi(10), widget = wibox.container.margin},
         forced_height = height,
@@ -20,11 +20,12 @@ popupLib.create = function(x, y, height, width, widget)
         bg = beautiful.xbackground,
         border_color = beautiful.widget_border_color,
         border_width = dpi(beautiful.widget_border_width),
-        shape = helpers.rrect(beautiful.client_radius),
+        shape = helpers.prrect(radius, tl, tr, bl, br),
         widget = wibox.container.background
     }
 
     local popupWidget = awful.popup {
+        screen = screen.primary,
         widget = widgetBG,
         visible = false,
         ontop = true,

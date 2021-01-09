@@ -28,9 +28,26 @@ client.connect_signal("property::floating", function(c)
             awful.titlebar.hide(c, "bottom")
             awful.titlebar.hide(c, "right")
             awful.titlebar.hide(c, "left")
-            c.border_width = dpi(1)
+            c.border_width = dpi(beautiful.border_width)
         end
     end
+
+    if c.type == "dialog" then
+        awful.titlebar.hide(c, "top")
+        awful.titlebar.hide(c, "bottom")
+        awful.titlebar.hide(c, "right")
+        awful.titlebar.hide(c, "left")
+        c.border_width = dpi(0)
+    end
+
+    if c.instance == "Toolkit" then
+        awful.titlebar.hide(c, "top")
+        awful.titlebar.hide(c, "bottom")
+        awful.titlebar.hide(c, "right")
+        awful.titlebar.hide(c, "left")
+        c.border_width = dpi(beautiful.border_width)
+    end
+
 end)
 
 client.connect_signal("manage", function(c)
@@ -46,9 +63,26 @@ client.connect_signal("manage", function(c)
             awful.titlebar.hide(c, "bottom")
             awful.titlebar.hide(c, "right")
             awful.titlebar.hide(c, "left")
-            c.border_width = dpi(1)
+            c.border_width = dpi(beautiful.border_width)
         end
     end
+
+    if c.type == "dialog" then
+        awful.titlebar.hide(c, "top")
+        awful.titlebar.hide(c, "bottom")
+        awful.titlebar.hide(c, "right")
+        awful.titlebar.hide(c, "left")
+        c.border_width = dpi(0)
+    end
+
+    if c.instance == "Toolkit" then
+        awful.titlebar.hide(c, "top")
+        awful.titlebar.hide(c, "bottom")
+        awful.titlebar.hide(c, "right")
+        awful.titlebar.hide(c, "left")
+        c.border_width = dpi(beautiful.border_width)
+    end
+
 end)
 
 tag.connect_signal("property::layout", function(t)
@@ -62,14 +96,31 @@ tag.connect_signal("property::layout", function(t)
             c.border_width = dpi(0)
         else
             if not c.bling_tabbed then
-                awful.titlebar.hide(c, "bottom")
+                awful.titlebar.hide(c, "top")
                 awful.titlebar.hide(c, "bottom")
                 awful.titlebar.hide(c, "right")
                 awful.titlebar.hide(c, "left")
-                c.border_width = dpi(1)
+                c.border_width = dpi(beautiful.border_width)
             end
         end
+        if c.type == "dialog" then
+            awful.titlebar.hide(c, "top")
+            awful.titlebar.hide(c, "bottom")
+            awful.titlebar.hide(c, "right")
+            awful.titlebar.hide(c, "left")
+            c.border_width = dpi(0)
+        end
+
+        if c.instance == "Toolkit" then
+            awful.titlebar.hide(c, "top")
+            awful.titlebar.hide(c, "bottom")
+            awful.titlebar.hide(c, "right")
+            awful.titlebar.hide(c, "left")
+            c.border_width = dpi(beautiful.border_width)
+        end
+
     end
+
 end)
 -- }}}
 
@@ -144,6 +195,14 @@ client.connect_signal("request::titlebars", function(c)
     local min = create_title_button(c, beautiful.xcolor3, beautiful.xcolor0)
     min:connect_signal("button::press", function() c.minimized = true end)
 
+    local top_bg = beautiful.xbackground
+
+    if c.class == "firefox" or c.class == "Thunar" then
+        top_bg = beautiful.xcolor0
+    else
+        top_bg = beautiful.xbackground
+    end
+
     awful.titlebar(c, {
         position = "top",
         size = beautiful.titlebar_size,
@@ -171,7 +230,7 @@ client.connect_signal("request::titlebars", function(c)
                     },
                     layout = wibox.layout.align.horizontal
                 },
-                bg = beautiful.xbackground,
+                bg = top_bg,
                 shape = helpers.prrect(beautiful.client_radius, true, true,
                                        false, false),
                 widget = wibox.container.background

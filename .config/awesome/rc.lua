@@ -74,7 +74,7 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "theme/" .. theme ..
                    "/theme.lua")
 
 -- Layouts
-require("windows")
+require("window")
 
 local icons = require("icons")
 icons.init("sheet")
@@ -182,8 +182,10 @@ awful.rules.rules = {
     },
 
     -- Add titlebars to normal clients and dialogs (UNCOMMENT FOR DOUBLE BORDERS)
-    {rule_any = {type = {"dialog"}}, properties = {titlebars_enabled = false}},
     {
+        rule_any = {type = {"dialog", "utility"}},
+        properties = {titlebars_enabled = false}
+    }, {
         rule_any = {class = {"Steam"}},
         properties = {titlebars_enabled = false, ontop = true}
     }, -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -211,6 +213,12 @@ awful.rules.rules = {
             })
             gears.timer.delayed_call(function() c.urgent = false end)
         end
+    }, {
+        rule = {class = "jetbrains-studio", name = "^win[0-9]+$"},
+        properties = {
+            placement = awful.placement.no_offscreen,
+            titlebars_enabled = false
+        }
     }
 }
 
@@ -243,7 +251,6 @@ client.connect_signal("unfocus",
 
 -- Import Daemons and Widgets
 require("ears")
-require("notifs")
 require("bloat")
 
 -- EOF ------------------------------------------------------------------------

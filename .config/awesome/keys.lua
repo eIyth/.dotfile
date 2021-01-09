@@ -8,15 +8,14 @@ local helpers = require("helpers")
 -- Custom modules
 local notifPop = require("bloat.pop.notif")
 local panelPop = require("bloat.pop.panel")
-local calPop = require("bloat.pop.cal")
 local bling = require("bling")
 
 globalkeys = gears.table.join( -- Focus client by direction (arrow keys)
-                 awful.key({"Mod1"}, "a",
-                           function() bling.module.tabbed.pick() end, {
-        description = "pick a client to add to tabbing group",
-        group = "Tabs"
-    }), awful.key({"Mod1"}, "s", function() bling.module.tabbed.iter() end, {
+                 awful.key({"Mod1"}, "a", function()
+        bling.module.tabbed.pick_with_dmenu()
+    end, {description = "pick a client to add to tabbing group", group = "Tabs"}),
+                 awful.key({"Mod1"}, "s",
+                           function() bling.module.tabbed.iter() end, {
         description = "iterate through tabbing group",
         group = "Tabs"
     }), awful.key({"Mod1"}, "d", function() bling.module.tabbed.pop() end, {
@@ -53,7 +52,6 @@ globalkeys = gears.table.join( -- Focus client by direction (arrow keys)
     end, {description = "show notifs", group = "awesome"}),
                  awful.key({modkey, shift}, "d", function()
         panelPop.visible = not panelPop.visible
-        calPop.visible = not calPop.visible
     end, {description = "show panel", group = "awesome"}),
 
                  awful.key({"Mod1"}, "Tab", function() end),
@@ -86,7 +84,8 @@ globalkeys = gears.table.join( -- Focus client by direction (arrow keys)
     }), awful.key({modkey}, "d", function() awful.spawn("rofi -show drun") end,
                   {description = "show rofi ", group = "launcher"}),
                  awful.key({modkey}, "e", function()
-        awful.spawn("/home/javacafe01/.bin/rofi-emoji.sh")
+        awful.spawn(gears.filesystem.get_configuration_dir() ..
+                        "scripts/rofi-emoji")
     end, {description = "show rofi emoji", group = "launcher"}),
 
     -- Volume control
@@ -99,11 +98,14 @@ globalkeys = gears.table.join( -- Focus client by direction (arrow keys)
 
     -- Screen Shots/Vids
                  awful.key({}, "Print", function()
-        awful.spawn.with_shell("~/.bin/shoot")
-    end), awful.key({modkey}, "Print",
-                    function() awful.spawn.with_shell("~/.bin/shoot selnp") end),
-                 awful.key({modkey, "Shift"}, "Print", function()
-        awful.spawn.with_shell("~/.bin/shoot sel")
+        awful.spawn.with_shell(gears.filesystem.get_configuration_dir() ..
+                                   "scripts/shoot")
+    end), awful.key({modkey}, "Print", function()
+        awful.spawn.with_shell(gears.filesystem.get_configuration_dir() ..
+                                   "scripts/shoot selnp")
+    end), awful.key({modkey, "Shift"}, "Print", function()
+        awful.spawn.with_shell(gears.filesystem.get_configuration_dir() ..
+                                   "scripts/shoot sel")
     end), -- Brightness
     awful.key({}, "XF86MonBrightnessUp",
               function() awful.spawn("brightnessctl set +5%") end),
